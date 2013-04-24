@@ -1,0 +1,36 @@
+{
+	"name": "progressbar",
+	"version": "0.1.0",
+	"description": "A nice wrapper around TJ Holowaychuck's node-progress with chaining, domains, and steps",
+	"homepage": "https://github.com/bevry/progressbar",
+	"keywords": [
+		"progress", "progressbar", "bar", "progress-bar", "ticks", "tick", "status"
+	],
+	"author": "Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
+	"maintainers": [
+		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+	],
+	"contributors": [
+		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+	],
+	"bugs": {
+		"url": "https://github.com/bevry/progresbar/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/bevry/progresbar.git"
+	},
+	"engines": {
+		"node": ">=0.4"
+	},
+	"dependencies": {
+		"progress": "0.1.0"
+	},
+	"devDependencies": {
+		"coffee-script": "~1.6.2"
+	},
+	"directories": {
+		"lib": "./out/lib"
+	},
+	"main": "./out/lib/progressbar.js"
+}
