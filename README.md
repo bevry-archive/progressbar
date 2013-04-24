@@ -11,7 +11,7 @@ A nice wrapper around [TJ Holowaychuck's](https://github.com/visionmedia) [node-
 ### Backend
 
 1. [Install Node.js](http://bevry.me/node/install)
-2. `npm install --save dominject`
+2. `npm install --save progressbar`
 
 ### Frontend
 
@@ -41,14 +41,16 @@ progress
 - `step(step)` - set the step, resets the total and the tick
 - `setTick(ticks)` - set the completed ticks
 - `addTick()` - add 1 to the completed ticks
-- `setTotal(total)` - set the total ticks we expect
-- `addTotal()` - add 1 to the total
+- `getTick()` - get the completed ticks
+- `setTotal(total)` - set the total ticks
+- `addTotal()` - add 1 to the total ticks
+- `getTotal()` - get the total ticks
 - `finish()` - finish manually, will destroy the progress bar
 
 
 
 ## History
-You can discover the history inside the [History.md](https://github.com/bevry/dominject/blob/master/History.md#files) file
+You can discover the history inside the [History.md](https://github.com/bevry/progressbar/blob/master/History.md#files) file
 
 
 

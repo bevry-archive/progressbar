@@ -1,12 +1,17 @@
 # Define
 class ProgressBar extends require('events').EventEmitter
-	_tick: 0
-	_total: 1
+	_tick: null
+	_total: null
 	_bar: null
 	_step: null
 	_domain: null
 
 	constructor: ->
+		@start()
+
+	start: ->
+		@_tick = 0
+		@_total = 1
 		d = @_domain = require('domain').create()
 		d.on 'error', (err) ->  # ignore
 		@on 'step', =>
@@ -51,6 +56,7 @@ class ProgressBar extends require('events').EventEmitter
 			@destroy()
 			@emit('finish')
 		@_domain?.dispose()
+		@removeAllListeners()
 		@
 
 # Create
