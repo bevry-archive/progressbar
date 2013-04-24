@@ -41,8 +41,10 @@ progress
 - `step(step)` - set the step, resets the total and the tick
 - `setTick(ticks)` - set the completed ticks
 - `addTick()` - add 1 to the completed ticks
-- `setTotal(total)` - set the total ticks we expect
-- `addTotal()` - add 1 to the total
+- `getTick()` - get the completed ticks
+- `setTotal(total)` - set the total ticks
+- `addTotal()` - add 1 to the total ticks
+- `getTotal()` - get the total ticks
 - `finish()` - finish manually, will destroy the progress bar
 
 
