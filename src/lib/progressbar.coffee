@@ -12,15 +12,21 @@ class ProgressBar extends require('events').EventEmitter
 	start: ->
 		@_tick = 0
 		@_total = 1
+
 		d = @_domain = require('domain').create()
 		d.on 'error', (err) ->  # ignore
+
 		@on 'step', =>
 			@destroy()
 			message = "Currently on #{@_step} at :current/:total :percent :bar"
 			width = 50
-			progress = require('progress')
 			d.run =>
-				@_bar = new progress(message,{total:@_total,width})
+				try
+					progress = require('progress')
+					@_bar = new progress(message, {total:@_total,width})
+				catch err
+					d.emit('error',err)
+
 		@on 'total', => @_bar?.total = @_total
 		@on 'tick', => @_bar?.tick(@_tick-@_bar.curr)
 

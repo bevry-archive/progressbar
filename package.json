@@ -1,6 +1,6 @@
 {
 	"name": "progressbar",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A nice wrapper around TJ Holowaychuck's node-progress with chaining, domains, and steps",
 	"homepage": "https://github.com/bevry/progressbar",
 	"keywords": [
