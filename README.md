@@ -11,7 +11,7 @@ A nice wrapper around [TJ Holowaychuck's](https://github.com/visionmedia) [node-
 ### Backend
 
 1. [Install Node.js](http://bevry.me/node/install)
-2. `npm install --save dominject`
+2. `npm install --save progressbar`
 
 ### Frontend
 
@@ -50,7 +50,7 @@ progress
 
 
 ## History
-You can discover the history inside the [History.md](https://github.com/bevry/dominject/blob/master/History.md#files) file
+You can discover the history inside the [History.md](https://github.com/bevry/progressbar/blob/master/History.md#files) file
 
 
 
