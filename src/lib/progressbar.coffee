@@ -37,7 +37,7 @@ class ProgressBar extends require('events').EventEmitter
 	total: (t) -> if t? then @setTotal(t) else @addTotal()
 	getTotal: -> @_total
 	addTotal: (t=1) -> @_total += t; @emit('total', @_total); @
-	setTotal: (t) -> @_total = t; @emit('total', @_total); @
+	setTotal: (t) -> @_total = t or 1; @emit('total', @_total); @
 
 	tick: (t) -> if t? then @setTick(t) else @addTick()
 	getTick: -> @_tick

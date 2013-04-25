@@ -1,5 +1,8 @@
 ## History
 
+- v1.0.2 April 25, 2013
+	- Never allow an invalid total
+
 - v1.0.1 April 25, 2013
 	- Fixed ubuntu and windows
 
