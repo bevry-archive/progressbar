@@ -14,11 +14,11 @@
 		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
 	],
 	"bugs": {
-		"url": "https://github.com/bevry/progresbar/issues"
+		"url": "https://github.com/bevry/progressbar/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "http://github.com/bevry/progresbar.git"
+		"url": "http://github.com/bevry/progressbar.git"
 	},
 	"engines": {
 		"node": ">=0.4"
