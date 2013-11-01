@@ -51,5 +51,8 @@
   "directories": {
     "lib": "./out/lib"
   },
+  "scripts": {
+    "test": "echo 'no tests yet'"
+  },
   "main": "./out/lib/progressbar.js"
 }
