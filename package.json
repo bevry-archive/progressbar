@@ -8,7 +8,7 @@
     "type": "MIT"
   },
   "badges": {
-    "travis": true,
+    "travis": false,
     "npm": true,
     "gittip": "bevry",
     "flattr": "344188/balupton-on-Flattr",
