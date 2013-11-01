@@ -14,25 +14,38 @@ class ProgressBar extends require('events').EventEmitter
 		@_total = 1
 
 		d = @_domain = require('domain').create()
-		d.on 'error', (err) ->  # ignore
 
+		# bubble domain errors
+		d.on 'error', (err) =>
+			@emit('error', err)
+
+		# destroy the old progressbar and create our new one
 		@on 'step', =>
 			@destroy()
-			message = "Currently on #{@_step} at :current/:total :percent :bar"
+			message = "Performing #{@_step} at :current/:total :percent :bar"
 			width = 50
 			d.run =>
 				try
 					progress = require('progress')
-					@_bar = new progress(message, {total:@_total,width})
+					@_bar = new progress(message, {
+						total: @_total,
+						width: width
+						clear: true
+					})
 				catch err
-					d.emit('error',err)
+					d.emit('error', err)
 
-		@on 'total', => @_bar?.total = @_total
-		@on 'tick', => @_bar?.tick(@_tick-@_bar.curr)
+		# update our bar's total
+		@on 'total', =>
+			@_bar?.total = @_total
+
+		# update our bar's progress
+		@on 'tick', =>
+			@_bar?.tick(@_tick - @_bar.curr)
 
 	step: (s) -> if s? then @setStep(s) else @getStep()
 	getStep: -> @_step
-	setStep: (s) -> @_step = s; @emit('step', @_step);  @setTick(0); @setTotal(1); @
+	setStep: (s) -> @_step = s; @emit('step', @_step); @setTick(0); @setTotal(1); @
 
 	total: (t) -> if t? then @setTotal(t) else @addTotal()
 	getTotal: -> @_total
@@ -48,11 +61,7 @@ class ProgressBar extends require('events').EventEmitter
 		return @  unless @_bar?
 		d = @_domain
 		d.run =>
-			@_bar.rl?.write(null, {ctrl:true,name:'u'})
-		d.run =>
-			@_bar.rl?.resume()
-		d.run =>
-			@_bar.rl?.close()
+			@_bar.terminate()
 		d.run =>
 			@_bar = null
 		@

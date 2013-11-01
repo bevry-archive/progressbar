@@ -1,36 +1,55 @@
 {
-	"name": "progressbar",
-	"version": "1.0.2",
-	"description": "A nice wrapper around TJ Holowaychuck's node-progress with chaining, domains, and steps",
-	"homepage": "https://github.com/bevry/progressbar",
-	"keywords": [
-		"progress", "progressbar", "bar", "progress-bar", "ticks", "tick", "status"
-	],
-	"author": "Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
-	"maintainers": [
-		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
-	],
-	"contributors": [
-		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
-	],
-	"bugs": {
-		"url": "https://github.com/bevry/progressbar/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "http://github.com/bevry/progressbar.git"
-	},
-	"engines": {
-		"node": ">=0.4"
-	},
-	"dependencies": {
-		"progress": "0.1.0"
-	},
-	"devDependencies": {
-		"coffee-script": "~1.6.2"
-	},
-	"directories": {
-		"lib": "./out/lib"
-	},
-	"main": "./out/lib/progressbar.js"
+  "title": "Progress Bar",
+  "name": "progressbar",
+  "version": "1.0.3",
+  "description": "A nice wrapper around [TJ Holowaychuck's](https://github.com/visionmedia) [node-progress](https://github.com/visionmedia/node-progress) with chaining, domains, and steps",
+  "homepage": "https://github.com/bevry/progressbar",
+  "license": {
+    "type": "MIT"
+  },
+  "badges": {
+    "travis": true,
+    "npm": true,
+    "gittip": "bevry",
+    "flattr": "344188/balupton-on-Flattr",
+    "paypal": "QB8GQPZAH84N6"
+  },
+  "keywords": [
+    "progress",
+    "progressbar",
+    "bar",
+    "progress-bar",
+    "ticks",
+    "tick",
+    "status"
+  ],
+  "author": "2013+ Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
+  "maintainers": [
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+  ],
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
+    "timoxley (https://github.com/timoxley)"
+  ],
+  "bugs": {
+    "url": "https://github.com/bevry/progressbar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/bevry/progressbar.git"
+  },
+  "engines": {
+    "node": ">=0.4"
+  },
+  "dependencies": {
+    "progress": "1.1.2"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.2",
+    "projectz": "~0.2.5"
+  },
+  "directories": {
+    "lib": "./out/lib"
+  },
+  "main": "./out/lib/progressbar.js"
 }

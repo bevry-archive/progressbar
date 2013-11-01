@@ -1,5 +1,8 @@
 ## History
 
+- v1.0.3 November 1, 2013
+	- Updated dependencies
+
 - v1.0.2 April 25, 2013
 	- Never allow an invalid total
 
