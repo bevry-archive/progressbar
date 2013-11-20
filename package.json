@@ -54,5 +54,5 @@
   "scripts": {
     "test": "echo 'no tests yet'"
   },
-  "main": "./out/lib/progressbar.js"
+  "main": "./out"
 }
