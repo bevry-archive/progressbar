@@ -33,7 +33,8 @@
   ],
   "contributors": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
-    "timoxley (https://github.com/timoxley)"
+    "timoxley (https://github.com/timoxley)",
+    "Zearin (https://github.com/Zearin)"
   ],
   "bugs": {
     "url": "https://github.com/bevry/progressbar/issues"
