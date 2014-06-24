@@ -43,9 +43,7 @@ A nice wrapper around [TJ Holowaychuck's](https://github.com/visionmedia) [node-
 ### Example
 
 ``` javascript
-var ProgressBar = require('progressbar').ProgressBar;
-var progress = new ProgressBar();
-progress
+require('progressbar').ProgressBar.create()
 	.step('the task you are currently performing')
 	.setTotal(5)
 	.setTick(1)
