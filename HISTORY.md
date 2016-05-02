@@ -1,13 +1,16 @@
 ## History
 
-## v1.0.3 November 1, 2013
+## v1.1.0 2016 May 2
+- Converted from CoffeeScript to JavaScript
+
+## v1.0.3 2013 November 1
 - Updated dependencies
 
-## v1.0.2 April 25, 2013
+## v1.0.2 2013 April 25
 - Never allow an invalid total
 
-## v1.0.1 April 25, 2013
+## v1.0.1 2013 April 25
 - Fixed ubuntu and windows
 
-## v1.0.0 April 25, 2013
+## v1.0.0 2013 April 25
 - Initial working version

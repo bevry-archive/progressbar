@@ -1,81 +1,159 @@
-# Define
-class ProgressBar extends require('events').EventEmitter
-	_tick: null
-	_total: null
-	_bar: null
-	_step: null
-	_domain: null
+// Define
+class ProgressBar extends require('events').EventEmitter {
 
-	constructor: ->
-		@start()
+	static create (...args) {
+		return new this(...args)
+	}
 
-	start: ->
-		@_tick = 0
-		@_total = 1
+	constructor (...args) {
+		super(...args)
 
-		d = @_domain = require('domain').create()
+		this._tick = null
+		this._total = null
+		this._bar = null
+		this._step = null
+		this._domain = null
 
-		# bubble domain errors
-		d.on 'error', (err) =>
-			@emit('error', err)
+		this.start()
+	}
 
-		# destroy the old progressbar and create our new one
-		@on 'step', =>
-			@destroy()
-			message = "Performing #{@_step} at :current/:total :percent :bar"
-			width = 50
-			d.run =>
-				try
-					progress = require('progress')
-					@_bar = new progress(message, {
-						total: @_total,
-						width: width
+	start () {
+		const me = this
+		this._tick = 0
+		this._total = 1
+		this._domain = require('domain').create()
+
+		// bubble domain errors
+		this._domain.on('error', function (err) {
+			me.emit('error', err)
+		})
+
+		// destroy the old progressbar and create our new one
+		this.on('step', function () {
+			me.destroy()
+			const message = `Performing ${me._step} at :current/:total :percent :bar`
+			const width = 50
+			me._domain.run(function () {
+				try {
+					const Progress = require('progress')
+					me._bar = new Progress(message, {
+						width,
+						total: me._total,
 						clear: true
 					})
-				catch err
-					d.emit('error', err)
+				}
+				catch ( err ) {
+					me._domain.emit('error', err)
+				}
+			})
+		})
 
-		# update our bar's total
-		@on 'total', =>
-			@_bar?.total = @_total
+		// update our bar's total
+		this.on('total', function () {
+			if ( me._bar )  me._bar.total = me._total
+		})
 
-		# update our bar's progress
-		@on 'tick', =>
-			@_bar?.tick(@_tick - @_bar.curr)
+		// update our bar's progress
+		this.on('tick', function () {
+			if ( me._bar )  me._bar.tick(me._tick - me._bar.curr)
+		})
 
-	step: (s) -> if s? then @setStep(s) else @getStep()
-	getStep: -> @_step
-	setStep: (s) -> @_step = s; @emit('step', @_step); @setTick(0); @setTotal(1); @
+		// chain
+		return this
+	}
 
-	total: (t) -> if t? then @setTotal(t) else @addTotal()
-	getTotal: -> @_total
-	addTotal: (t=1) -> @_total += t; @emit('total', @_total); @
-	setTotal: (t) -> @_total = t or 1; @emit('total', @_total); @
+	step (s) {
+		if ( s != null ) {
+			this.setStep(s)
+		}
+		else {
+			this.getStep()
+		}
+		return this
+	}
+	getStep () {
+		return this._step
+	}
+	setStep (s) {
+		this._step = s
+		this.emit('step', this._step)
+		this.setTick(0)
+		this.setTotal(1)
+		return this
+	}
 
-	tick: (t) -> if t? then @setTick(t) else @addTick()
-	getTick: -> @_tick
-	addTick: (t=1) -> @_tick += t; @emit('tick', @_tick); @
-	setTick: (t) -> @_tick = t; @emit('tick', @_tick); @
+	total (t) {
+		if ( t != null ) {
+			this.setTotal(t)
+		}
+		else {
+			this.addTotal()
+		}
+		return this
+	}
+	getTotal () {
+		return this._total
+	}
+	addTotal (t = 1) {
+		this._total += t
+		this.emit('total', this._total)
+		return this
+	}
+	setTotal (t = 1) {
+		this._total = t
+		this.emit('total', this._total)
+		return this
+	}
 
-	destroy: ->
-		return @  unless @_bar?
-		d = @_domain
-		d.run =>
-			@_bar.terminate()
-		d.run =>
-			@_bar = null
-		@
+	tick (t) {
+		if ( t != null ) {
+			this.setTick(t)
+		}
+		else {
+			this.addTick()
+		}
+		return this
+	}
+	getTick () {
+		return this._tick
+	}
+	addTick (t = 1) {
+		this._tick += t
+		this.emit('tick', this._tick)
+		return this
+	}
+	setTick (t) {
+		this._tick = t
+		this.emit('tick', this._tick)
+		return this
+	}
 
-	finish: ->
-		if @_bar?
-			@destroy()
-			@emit('finish')
-		@_domain?.dispose()
-		@removeAllListeners()
-		@
+	destroy () {
+		if ( this._bar == null )  return this
+		const me = this
+		this._domain.run(function () {
+			me._bar.terminate()
+		})
+		this._domain.run(function () {
+			me._bar = null
+		})
+		return this
+	}
+	finish () {
+		if ( this._bar != null ) {
+			this.destroy()
+			this.emit('finish')
+		}
+		if ( this._domain ) {
+			this._domain.dispose()
+		}
+		this.removeAllListeners()
+		return this
+	}
+}
 
-# Create
-create = -> return new ProgressBar()
+// Export
+module.exports = ProgressBar
 
-# Export
-module.exports = {ProgressBar,create}
+// Backwards API Compat
+module.exports.ProgressBar = ProgressBar
