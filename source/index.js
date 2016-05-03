@@ -32,12 +32,11 @@ class ProgressBar extends require('events').EventEmitter {
 		this.on('step', function () {
 			me.destroy()
 			const message = `Performing ${me._step} at :current/:total :percent :bar`
-			const width = 50
 			me._domain.run(function () {
 				try {
 					const Progress = require('progress')
 					me._bar = new Progress(message, {
-						width,
+						width: 50,
 						total: me._total,
 						clear: true
 					})
@@ -67,7 +66,7 @@ class ProgressBar extends require('events').EventEmitter {
 			this.setStep(s)
 		}
 		else {
-			this.getStep()
+			throw new Error('step is now just an alias for setStep to ensure consistent return value')
 		}
 		return this
 	}
@@ -75,6 +74,7 @@ class ProgressBar extends require('events').EventEmitter {
 		return this._step
 	}
 	setStep (s) {
+		if ( !s )  throw new Error('no step param defined')
 		this._step = s
 		this.emit('step', this._step)
 		this.setTick(0)
@@ -99,8 +99,8 @@ class ProgressBar extends require('events').EventEmitter {
 		this.emit('total', this._total)
 		return this
 	}
-	setTotal (t = 1) {
-		this._total = t
+	setTotal (t) {
+		this._total = t || 1  // must be truthy rather than null, otherwise: RangeError: Invalid array length
 		this.emit('total', this._total)
 		return this
 	}
@@ -128,26 +128,27 @@ class ProgressBar extends require('events').EventEmitter {
 		return this
 	}
 
-	destroy () {
-		if ( this._bar == null )  return this
-		const me = this
-		this._domain.run(function () {
-			me._bar.terminate()
-		})
-		this._domain.run(function () {
-			me._bar = null
-		})
+	destroy (next) {
+		if ( this._bar != null ) {
+			const me = this
+			this._domain.run(function () {
+				me._bar.terminate()
+			})
+			this._domain.run(function () {
+				me._bar = null
+			})
+		}
+		if ( next )  next()
 		return this
 	}
-	finish () {
-		if ( this._bar != null ) {
-			this.destroy()
-			this.emit('finish')
-		}
-		if ( this._domain ) {
-			this._domain.dispose()
-		}
-		this.removeAllListeners()
+	finish (next) {
+		const me = this
+		this.destroy(function () {
+			me.emit('finish')
+			if ( me._domain )  me._domain.dispose()
+			me.removeAllListeners()
+			if ( next )  next()
+		})
 		return this
 	}
 }
