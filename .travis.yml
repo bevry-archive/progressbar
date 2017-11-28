@@ -17,8 +17,8 @@ cache:
 
 # Prepare our tests
 # Ensure the project is setup correctly and compiled
-install: "npm run-script setup"
-before_script: "npm run-script compile"
+install: "npm run-script our:setup"
+before_script: "npm run-script our:compile"
 
 # Run our tests
 script: "npm test"
