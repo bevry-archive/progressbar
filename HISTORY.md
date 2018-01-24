@@ -1,8 +1,12 @@
-## History
+# History
+
+## v1.2.0 2018 January 24
+- Node v9 compatibility
+  - Thanks to [Ángel González](https://github.com/Aglezabad) for [pull request #6](https://github.com/bevry/progressbar/pull/6)
 
 ## v1.1.1 2016 May 4
 - Fixed `Range Error: Invalid array length` that could occur under special circumstances
-  - Thanks to [Steve McArthur](https://github.com/SteveMcArthur) for [issue #4](https://github.com/bevry/progressbar/issues/4)
+    - Thanks to [Steve McArthur](https://github.com/SteveMcArthur) for [issue #4](https://github.com/bevry/progressbar/issues/4)
 
 ## v1.1.0 2016 May 2
 - Converted from CoffeeScript to JavaScript
