@@ -1,4 +1,5 @@
-// Define
+'use strict'
+
 class ProgressBar extends require('events').EventEmitter {
 
 	static create (...args) {
