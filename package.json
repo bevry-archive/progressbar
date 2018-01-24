@@ -1,7 +1,7 @@
 {
   "title": "Progress Bar",
   "name": "progressbar",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "A nice wrapper around [TJ Holowaychuck's](https://github.com/visionmedia) [node-progress](https://github.com/visionmedia/node-progress) with chaining, domains, and steps",
   "homepage": "https://github.com/bevry/progressbar",
   "license": "MIT",
@@ -92,7 +92,7 @@
   "main": "index.js",
   "dependencies": {
     "editions": "^1.3.3",
-    "progress": "1.1.8"
+    "progress": "2.0.0"
   },
   "devDependencies": {
     "assert-helpers": "^4.5.0",

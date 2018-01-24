@@ -1,5 +1,8 @@
 # History
 
+## v1.3.0 2018 January 24
+- Update dependencies
+
 ## v1.2.1 2018 January 24
 - Recompile without uneeded plugin
 
