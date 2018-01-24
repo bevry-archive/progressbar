@@ -1,5 +1,7 @@
 'use strict'
 
+const Progress = require('progress')
+
 class ProgressBar extends require('events').EventEmitter {
 
 	static create (...args) {
@@ -22,48 +24,64 @@ class ProgressBar extends require('events').EventEmitter {
 		const me = this
 		this._tick = 0
 		this._total = 1
-		this._domain = require('domain').create()
+		try {
+			this._domain = require('domain').create()
+		}
+		catch (err) { }
 
 		// bubble domain errors
-		this._domain.on('error', function (err) {
-			me.emit('error', err)
-		})
+		if (this._domain) {
+			this._domain.on('error', function (err) {
+				me.emit('error', err)
+			})
+		}
 
 		// destroy the old progressbar and create our new one
 		this.on('step', function () {
 			me.destroy()
 			const message = `Performing ${me._step} at :current/:total :percent :bar`
-			me._domain.run(function () {
-				try {
-					const Progress = require('progress')
-					me._bar = new Progress(message, {
-						width: 50,
-						total: me._total,
-						clear: true
-					})
-				}
-				catch ( err ) {
-					me._domain.emit('error', err)
-				}
-			})
+			if (me._domain) {
+				me._domain.run(me.onStep.bind(me, message))
+			}
+			else {
+				me.onStep()
+			}
 		})
 
 		// update our bar's total
 		this.on('total', function () {
-			if ( me._bar )  me._bar.total = me._total
+			if (me._bar) me._bar.total = me._total
 		})
 
 		// update our bar's progress
 		this.on('tick', function () {
-			if ( me._bar )  me._bar.tick(me._tick - me._bar.curr)
+			if (me._bar) me._bar.tick(me._tick - me._bar.curr)
 		})
 
 		// chain
 		return this
 	}
 
+	onStep (message) {
+		try {
+			this._bar = new Progress(message, {
+				width: 50,
+				total: this._total,
+				clear: true
+			})
+		}
+		catch (err) {
+			if (this._domain) {
+				this._domain.emit('error', err)
+			}
+			else {
+				this.emit('error', err)
+			}
+		}
+	}
+
 	step (s) {
-		if ( s != null ) {
+		if (s != null) {
 			this.setStep(s)
 		}
 		else {
@@ -75,7 +93,7 @@ class ProgressBar extends require('events').EventEmitter {
 		return this._step
 	}
 	setStep (s) {
-		if ( !s )  throw new Error('no step param defined')
+		if (!s) throw new Error('no step param defined')
 		this._step = s
 		this.emit('step', this._step)
 		this.setTick(0)
@@ -84,7 +102,7 @@ class ProgressBar extends require('events').EventEmitter {
 	}
 
 	total (t) {
-		if ( t != null ) {
+		if (t != null) {
 			this.setTotal(t)
 		}
 		else {
@@ -107,7 +125,7 @@ class ProgressBar extends require('events').EventEmitter {
 	}
 
 	tick (t) {
-		if ( t != null ) {
+		if (t != null) {
 			this.setTick(t)
 		}
 		else {
@@ -130,25 +148,31 @@ class ProgressBar extends require('events').EventEmitter {
 	}
 
 	destroy (next) {
-		if ( this._bar != null ) {
+		if (this._bar != null) {
 			const me = this
-			this._domain.run(function () {
+			if (this._domain) {
+				this._domain.run(function () {
+					me._bar.terminate()
+				})
+				this._domain.run(function () {
+					me._bar = null
+				})
+			}
+			else {
 				me._bar.terminate()
-			})
-			this._domain.run(function () {
 				me._bar = null
-			})
+			}
 		}
-		if ( next )  next()
+		if (next) next()
 		return this
 	}
 	finish (next) {
 		const me = this
 		this.destroy(function () {
 			me.emit('finish')
-			if ( me._domain )  me._domain.dispose()
+			if (me._domain) me._domain.exit()
 			me.removeAllListeners()
-			if ( next )  next()
+			if (next) next()
 		})
 		return this
 	}
