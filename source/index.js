@@ -12,7 +12,6 @@ class ProgressBar extends require('events').EventEmitter {
 		this._total = null
 		this._bar = null
 		this._step = null
-		this._domain = null
 
 		this.start()
 	}
@@ -21,30 +20,22 @@ class ProgressBar extends require('events').EventEmitter {
 		const me = this
 		this._tick = 0
 		this._total = 1
-		this._domain = require('domain').create()
-
-		// bubble domain errors
-		this._domain.on('error', function (err) {
-			me.emit('error', err)
-		})
 
 		// destroy the old progressbar and create our new one
 		this.on('step', function () {
 			me.destroy()
 			const message = `Performing ${me._step} at :current/:total :percent :bar`
-			me._domain.run(function () {
-				try {
-					const Progress = require('progress')
-					me._bar = new Progress(message, {
-						width: 50,
-						total: me._total,
-						clear: true
-					})
-				}
-				catch ( err ) {
-					me._domain.emit('error', err)
-				}
-			})
+			try {
+				const Progress = require('progress')
+				me._bar = new Progress(message, {
+					width: 50,
+					total: me._total,
+					clear: true
+				})
+			}
+			catch (err) {
+				me.emit('error', err)
+			}
 		})
 
 		// update our bar's total
@@ -131,12 +122,8 @@ class ProgressBar extends require('events').EventEmitter {
 	destroy (next) {
 		if ( this._bar != null ) {
 			const me = this
-			this._domain.run(function () {
-				me._bar.terminate()
-			})
-			this._domain.run(function () {
-				me._bar = null
-			})
+			me._bar.terminate()
+			me._bar = null
 		}
 		if ( next )  next()
 		return this
@@ -145,7 +132,6 @@ class ProgressBar extends require('events').EventEmitter {
 		const me = this
 		this.destroy(function () {
 			me.emit('finish')
-			if ( me._domain )  me._domain.dispose()
 			me.removeAllListeners()
 			if ( next )  next()
 		})
