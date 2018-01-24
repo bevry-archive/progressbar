@@ -1,7 +1,7 @@
 {
   "title": "Progress Bar",
   "name": "progressbar",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A nice wrapper around [TJ Holowaychuck's](https://github.com/visionmedia) [node-progress](https://github.com/visionmedia/node-progress) with chaining, domains, and steps",
   "homepage": "https://github.com/bevry/progressbar",
   "license": "MIT",
@@ -99,7 +99,6 @@
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.16.0",
-    "eslint-plugin-babel": "^3.2.0",
     "joe": "^2.0.2",
     "joe-reporter-console": "^2.0.1",
     "projectz": "^1.4.0"

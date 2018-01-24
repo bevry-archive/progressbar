@@ -1,5 +1,8 @@
 # History
 
+## v1.2.1 2018 January 24
+- Recompile without uneeded plugin
+
 ## v1.2.0 2018 January 24
 - Node v9 compatibility
   - Thanks to [Ángel González](https://github.com/Aglezabad) for [pull request #6](https://github.com/bevry/progressbar/pull/6)
