@@ -50,7 +50,8 @@
   "contributors": [
     "Benjamin Lupton <b@lupton.cc> (http://balupton.com)",
     "Tim Oxley <secoif@gmail.com> (http://campjs.com/)",
-    "Zearin (https://github.com/Zearin)"
+    "Zearin (https://github.com/Zearin)",
+    "Arne Schubert <atd.schubert@gmail.com> (https://github.com/atd-schubert)"
   ],
   "bugs": {
     "url": "https://github.com/bevry/progressbar/issues"
