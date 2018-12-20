@@ -1,6 +1,6 @@
-'use strict'
+import ProgressBar from "../";
 
-const progress = require('../').create().step('the task you are currently performing')
+const progress = ProgressBar.create().step("the task you are currently performing");
 
 // use an array of steps that execute one second after each other
 // as if we do them all instantly
@@ -12,9 +12,9 @@ const steps = [
 	() => progress.setTick(3),
 	() => progress.addTick(),
 	() => progress.addTick(),
-	() => progress.finish()  // remove and destroy the progress bar
-]
+	() => progress.finish(),  // remove and destroy the progress bar
+];
 
-steps.forEach(function (step, index) {
-	setTimeout(step, index * 1000)
-})
+steps.forEach((step, index) => {
+	setTimeout(step, index * 1000);
+});

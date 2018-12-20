@@ -39,4 +39,8 @@ docs/
 # =====================================
 # CUSTOM
 
+# TypeScript artifacts
+*.js
+*.js.map
+
 # None
